@@ -84,15 +84,17 @@ public class HandleCSVService {
         EntityFactoryFromString<?> entityFactory = entityFactories.get(tableName);
 
         String headerLine = reader.readLine();
+
         if (headerLine == null || headerLine.isEmpty()) return 0;
+        String[] headers = headerLine.split(",");
 
         String line;
         int countRowAffect = 0;
 
         while (((line = reader.readLine()) != null)) {
-            String[] data = line.split(", ");
+            String[] data = line.split(",");
 
-            Object obj = entityFactory.fromStringArray(data, headerLine.split(", "));
+            Object obj = entityFactory.fromStringArray(data, headers);
 
             Class<?> clazz = obj.getClass();
             System.out.println("Class of object: " + obj.getClass());

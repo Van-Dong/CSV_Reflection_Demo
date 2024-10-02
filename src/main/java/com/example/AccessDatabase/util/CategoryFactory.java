@@ -12,13 +12,13 @@ public class CategoryFactory implements EntityFactoryFromString<Category> {
 
         Category c = new Category();
         for (int i = 0; i < values.length; i++) {
-            Field field = clazz.getDeclaredField(headers[i]);
+            Field field = clazz.getDeclaredField(headers[i].trim());
             field.setAccessible(true);
 
-            if (headers[i].equals("id")) {
-                c.setId(Integer.parseInt(values[i]));
+            if (headers[i].trim().equals("id")) {
+                c.setId(Integer.parseInt(values[i].trim()));
             } else {
-                field.set(c, values[i]);
+                field.set(c, values[i].trim());
             }
 
         }
