@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HandleCSV</title>
+</head>
+<body>
+<form action="/import?tableName=Movie" method="post" enctype="multipart/form-data">
+    <label for="fileMovie">Import file csv for Movie:</label>
+    <input type="file" name="file" id="fileMovie">
+    <input type="submit" />
+</form>
+
+<a href="/export?tableName=Movie">Export data</a>
+
+<br>
+<br>
+<form action="/import?tableName=Category" method="post" enctype="multipart/form-data">
+    <label for="fileCategory">Import file csv for Category</label>
+    <input type="file" name="file" id="fileCategory">
+    <input type="submit">
+</form>
+<a href="/export?tableName=Category">Export data</a>
+
+<br/>
+<br/>
+<h2 th:text="${resultImport}"></h2>
+</body>
+</html>
