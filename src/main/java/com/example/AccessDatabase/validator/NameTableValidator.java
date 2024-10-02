@@ -9,7 +9,6 @@ public class NameTableValidator implements ConstraintValidator<ValidNameTable, S
 
     @Override
     public void initialize(ValidNameTable constraintAnnotation) {
-//        ConstraintValidator.super.initialize(constraintAnnotation);
         this.acceptedValues = constraintAnnotation.acceptedValues();
     }
 

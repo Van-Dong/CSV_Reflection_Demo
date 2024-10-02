@@ -41,7 +41,7 @@ public class HandleCSVController {
     }
 
     @PostMapping("/import")
-    public String importCSV(@ValidNameTable(acceptedValues = {"Movie", "Category"}) @RequestParam(defaultValue = "") String tableName, @RequestParam MultipartFile file, Model m) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public String importCSV(@ValidNameTable(acceptedValues = {"Movie", "Category"}) @RequestParam(defaultValue = "") String tableName, @RequestParam MultipartFile file, Model m) throws IOException, IllegalAccessException, NoSuchFieldException {
         // handle CSV
         int result = handleCSVService.importData(tableName, file);
         m.addAttribute("resultImport", result);

@@ -54,6 +54,12 @@ public class HandleCSVService {
         Class<?> clazz = list.get(0).getClass();
         Field[] fields = clazz.getDeclaredFields();
 
+        for (Field field : fields) {
+            sb.append(field.getName()).append(", ");
+        }
+        sb.delete(sb.length() - 2, sb.length());
+        sb.append("\n");
+
         for (Object object : list) {
             for (Field field : fields) {
                 field.setAccessible(true);
@@ -72,10 +78,13 @@ public class HandleCSVService {
     }
 
     @Transactional
-    public Integer importData(String tableName, MultipartFile file) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public Integer importData(String tableName, MultipartFile file) throws IOException, NoSuchFieldException, IllegalAccessException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
         JpaRepository repository = repositories.get(tableName);
         EntityFactoryFromString<?> entityFactory = entityFactories.get(tableName);
+
+        String headerLine = reader.readLine();
+        if (headerLine == null || headerLine.isEmpty()) return 0;
 
         String line;
         int countRowAffect = 0;
@@ -83,7 +92,7 @@ public class HandleCSVService {
         while (((line = reader.readLine()) != null)) {
             String[] data = line.split(", ");
 
-            Object obj = entityFactory.fromStringArray(data);
+            Object obj = entityFactory.fromStringArray(data, headerLine.split(", "));
 
             Class<?> clazz = obj.getClass();
             System.out.println("Class of object: " + obj.getClass());
